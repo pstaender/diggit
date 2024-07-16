@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { generateText } from "ai";
 import { openai } from "@ai-sdk/openai"; // Ensure OPENAI_API_KEY environment variable is set
 
