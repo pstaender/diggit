@@ -25,13 +25,9 @@ $ diggit - Unstage the file docker-compose.yml
 $ diggit - Add lines of the file docker-compose.yml interactively
 ```
 
-### YOLO mode
+### yolo
 
-```sh
-$ diggit --yolo - Add lines of the file docker-compose.yml interactively
-```
-
-or
+⚠️ If you have nothing to lose, feel free to execute the command directly and accept the potential consequences ⚠️
 
 ```sh
 $ diggit - Add lines of the file docker-compose.yml interactively|sh
