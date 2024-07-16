@@ -19,15 +19,17 @@ $ diggit - Your problem for what you need a git command
 
 ```sh
 $ diggit - Unstage the file docker-compose.yml
+git reset HEAD docker-compose.yml
 ```
 
 ```sh
 $ diggit - Add lines of the file docker-compose.yml interactively
+git add -p docker-compose.yml
 ```
 
-### yolo
+### ⚠️ yolo ⚠️
 
-⚠️ If you have nothing to lose, feel free to execute the command directly and accept the potential consequences ⚠️
+If you have nothing to lose, feel free to execute the command directly and accept the potential consequences:
 
 ```sh
 $ diggit - Add lines of the file docker-compose.yml interactively|sh
