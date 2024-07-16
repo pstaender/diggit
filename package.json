@@ -1,0 +1,17 @@
+{
+  "name": "diggit",
+  "version": "0.0.1",
+  "main": "index.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Philipp Staender <pstaender@mailbox.org>",
+  "license": "MIT",
+  "description": "Generate git commands from natural language",
+  "repository": "pstaender/diggit",
+  "dependencies": {
+    "@ai-sdk/openai": "^0.0.36",
+    "ai": "^3.2.24",
+    "prompts": "^2.4.2"
+  }
+}
