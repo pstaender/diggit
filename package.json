@@ -1,6 +1,6 @@
 {
   "name": "diggit",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "main": "diggit.mjs",
   "bin": {
     "diggit": "diggit.mjs"
@@ -15,7 +15,6 @@
   "dependencies": {
     "@ai-sdk/openai": "^0.0.36",
     "ai": "^3.2.24",
-    "ollama-ai-provider": "^0.10.0",
-    "prompts": "^2.4.2"
+    "ollama-ai-provider": "^0.10.0"
   }
 }

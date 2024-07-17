@@ -21,7 +21,7 @@ Install [oolama](https://ollama.com/) with llama3 (`ollama run llama3`).
 
 For more models and configurations, see [Configuraion](#configuration).
 
-### Usage
+### Usage and examples
 
 ```sh
 $ diggit - Unstage the file docker-compose.yml
@@ -31,6 +31,11 @@ git reset HEAD docker-compose.yml
 ```sh
 $ diggit - Add and commit lines of the file docker-compose.yml interactively
 git add -p docker-compose.yml && git commit
+```
+
+```sh
+$ diggit - Change last commit message
+git commit --amend
 ```
 
 Use your project files for context, to generate more project specific prompts:

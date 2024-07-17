@@ -46,23 +46,21 @@ async function prompt(promptMessage) {
     process.exit(1);
   }
 
-
   let { text } = await generateText({
     model,
     prompt: promptMessage
   });
-
-  text = `\n${text}`;
 
   // console.error({promptMessage, text})
 
   if (typeof text !== "string") {
     return "";
   }
-  if (text.match(/\n`{1,3}/)) {
-    return text.split(/\n`{1,3}/)[1]
-    .replace(/^(bash|shell|sh)/, "")
-    .trim();
+  if (text.match(/`{1,3}/)) {
+    return text
+      .split(/`{1,3}/)[1]
+      .replace(/^(bash|shell|sh)/, "")
+      .trim();
   }
   return text.trim();
 }
@@ -124,12 +122,15 @@ for (let arg of process.argv) {
       } else {
         command = `Please transform the following text to a very short and descriptive commit message:\n\n${command}`;
       }
-      //
+    } else {
+      command = `Please generate and return only the git command for:\n\n${command}`;
     }
 
     console.log(
       await prompt(
-        [relevantFilesPrompt(relevantFiles), command].filter(v => !!v.trim()).join("\n")
+        [relevantFilesPrompt(relevantFiles), command]
+          .filter((v) => !!v.trim())
+          .join("\n")
       )
     );
   }
