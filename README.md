@@ -24,16 +24,6 @@ For more models and configurations, see [Configuraion](#configuration).
 ### Usage
 
 ```sh
-$ diggit - Generate git command from sentence
-```
-
-```sh
-$ diggit -- Generate git command from sentence but also sends relevant filenames as context
-```
-
-### Examples
-
-```sh
 $ diggit - Unstage the file docker-compose.yml
 git reset HEAD docker-compose.yml
 ```
@@ -50,12 +40,29 @@ $ diggit -- Add and commit all models
 git add app/models && git commit
 ```
 
+Generate short commit messages:
+
+```sh
+$ diggit --message - Refined html template for newsletter mailer to improve external user experience
+Improve HTML template for newsletter mailer
+```
+
+To list available options:
+
+```sh
+$ diggit -h
+```
+
 ### yolo
 
 If you have nothing to lose, feel free to execute the command directly and accept the potential consequences:
 
 ```sh
-$ diggit - Your potential good prompt for the git command|sh
+$ diggit - Your potential dangerous prompt for the git command|sh
+```
+
+```sh
+$ git commit -m "$(diggit -m - Generating a short commit message from a long text message)"
 ```
 
 ### Configuration

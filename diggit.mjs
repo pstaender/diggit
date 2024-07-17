@@ -26,14 +26,15 @@ try {
   }
 }
 
-async function prompt(command, relevantFiles = []) {
-  let relevantFilesPrompt =
-    relevantFiles.length > 0
-      ? `We have the following files in a git repo:\n\n${relevantFiles.join(
-          ","
-        )}\n\n`
-      : "";
+function relevantFilesPrompt(relevantFiles) {
+  return relevantFiles.length > 0
+    ? `We have the following files in a git repo:\n\n${relevantFiles.join(
+        ","
+      )}\n\n`
+    : "";
+}
 
+async function prompt(promptMessage) {
   let model = null;
 
   if (config.openai_api_key && config.openai_model) {
@@ -45,40 +46,58 @@ async function prompt(command, relevantFiles = []) {
     process.exit(1);
   }
 
-  const { text } = await generateText({
+
+  let { text } = await generateText({
     model,
-    prompt: `${relevantFilesPrompt}Please generate and return only the git command for: ${command.trim()}`
+    prompt: promptMessage
   });
 
-  return typeof text !== "string"
-    ? ""
-    : (text)
-        .split(/\n`{1,3}/)[1]
-        .replace(/^(bash|shell|sh)/, "")
-        .trim();
+  text = `\n${text}`;
+
+  // console.error({promptMessage, text})
+
+  if (typeof text !== "string") {
+    return "";
+  }
+  if (text.match(/\n`{1,3}/)) {
+    return text.split(/\n`{1,3}/)[1]
+    .replace(/^(bash|shell|sh)/, "")
+    .trim();
+  }
+  return text.trim();
 }
 
-let args = null;
+let argsAfterHyphens = null;
 let relevantFiles = [];
+let generateCommitMessage = false;
 
 for (let arg of process.argv) {
-  if (args?.constructor === Array) {
-    args.push(arg);
+  if (argsAfterHyphens?.constructor === Array) {
+    argsAfterHyphens.push(arg);
     continue;
   }
-  if (arg === "--help" || arg === "-h") {
-    let packageJson = JSON.parse(
-      readFileSync(new URL("./package.json", import.meta.url))
-    );
-    console.log(
-      `Generates git commands from natural language v${packageJson.version}\nUsage: diggit - Unstage file xyz.js`
-    );
+
+  if (!argsAfterHyphens) {
+    if (arg === "--help" || arg === "-h") {
+      let packageJson = JSON.parse(
+        readFileSync(new URL("./package.json", import.meta.url))
+      );
+      console.log(
+        `Generates git commands from natural language v${packageJson.version}\nUsage: diggit - Unstage file xyz.js\n\nOptions:\n  -h, --help\t\tShow help\n  -m, --message\t\tGenerate commit message\n  --\t\t\tGenerate git command from natural language with relevant files as context\n  -\t\t\tGenerate git command from natural language`
+      );
+      process.exit(0);
+    }
+    if (arg === "--message" || arg === "-m") {
+      generateCommitMessage = true;
+    }
   }
+
   if (arg === "-") {
-    args = [];
+    argsAfterHyphens = [];
   }
+
   if (arg === "--") {
-    args = [];
+    argsAfterHyphens = [];
     relevantFiles = process.cwd()
       ? execFileSync("git", ["diff", "--name-only"], {
           stdio: "pipe",
@@ -93,8 +112,25 @@ for (let arg of process.argv) {
 }
 
 (async () => {
-  if (args && args.join("").trim()) {
-    let gitCommand = await prompt(args.join(" "), relevantFiles);
-    console.log(gitCommand);
+  if (
+    argsAfterHyphens &&
+    argsAfterHyphens.length > 0 &&
+    argsAfterHyphens.join("").trim()
+  ) {
+    let command = argsAfterHyphens.join(" ");
+    if (generateCommitMessage) {
+      if (relevantFiles.length === 0 && command.trim() === "") {
+        command = "Please make a very short and descriptive commit message.";
+      } else {
+        command = `Please transform the following text to a very short and descriptive commit message:\n\n${command}`;
+      }
+      //
+    }
+
+    console.log(
+      await prompt(
+        [relevantFilesPrompt(relevantFiles), command].filter(v => !!v.trim()).join("\n")
+      )
+    );
   }
 })();
