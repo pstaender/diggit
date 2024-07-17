@@ -8,7 +8,7 @@ import { ollama } from "ollama-ai-provider";
 import { homedir } from "node:os";
 
 let config = {
-  openai_model: process.env.OPENAI_API_KEY || "gpt-4o",
+  openai_model: process.env.OPENAI_API_MODEL || "gpt-4o",
   openai_api_key: process.env.OPENAI_API_KEY,
   ollama_model: process.env.OLLAMA_MODEL || "llama3" // or mistral as default?
 };

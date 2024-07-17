@@ -7,9 +7,11 @@
 $ npm install -g diggit
 ```
 
+Choose your ai provider by [setting the config keys or environment variables](#configuration). By default a local running version of ollama is expected.
+
 #### OpenAI Setup
 
-Set your api key as (global) `OPENAI_API_KEY`-env-variable. The default model is gpt-4o.
+Set your api key as (global) `OPENAI_API_KEY`-env-variable. The default model is `gpt-4o`.
 
 #### Ollama
 
@@ -56,18 +58,19 @@ If you have nothing to lose, feel free to execute the command directly and accep
 $ diggit - Your potential good prompt for the git command|sh
 ```
 
-### Config
+### Configuration
 
-Create a `.diggit.json` in your home folder and set your desired config values, here are configurable values as example:
+Create a `.diggit.json` in your home directory and set your desired config values.
 
-```json
+Configurable values are:
+
+```js
 {
-  "openai_key": "sk-…",
-  "openai_model": "gpt-4-turbo",
-  "ollama_model": "mistral"
+  "openai_key": "sk-…",             // or OPENAI_API_KEY
+  "openai_model": "gpt-4-turbo",    // or OPENAI_API_MODEL
+  "ollama_model": "mistral"         // or OLLAMA_MODEL
 }
 ```
-
 
 ### License
 
