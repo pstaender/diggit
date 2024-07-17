@@ -1,13 +1,23 @@
 # Diggit
 ## Generates git commands from natural language
 
-### Install
+### Install and Setup
 
 ```sh
 $ npm install -g diggit
 ```
 
-Set your api key as (global) `OPENAI_API_KEY`-env-variable.
+#### OpenAI Setup
+
+Set your api key as (global) `OPENAI_API_KEY`-env-variable. The default model is gpt-4o.
+
+#### Ollama
+
+Install [oolama](https://ollama.com/) with llama3 (`ollama run llama3`).
+
+#### Other models
+
+For more models and configurations, see [Configuraion](#configuration).
 
 ### Usage
 
@@ -45,6 +55,19 @@ If you have nothing to lose, feel free to execute the command directly and accep
 ```sh
 $ diggit - Your potential good prompt for the git command|sh
 ```
+
+### Config
+
+Create a `.diggit.json` in your home folder and set your desired config values, here are configurable values as example:
+
+```json
+{
+  "openai_key": "sk-…",
+  "openai_model": "gpt-4-turbo",
+  "ollama_model": "mistral"
+}
+```
+
 
 ### License
 
