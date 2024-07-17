@@ -27,16 +27,11 @@ git reset HEAD docker-compose.yml
 ```
 
 ```sh
-$ diggit - Add and commit lines from docker-compose.yml interactively
-git add -p docker-compose.yml && git commit
+$ diggit - Add lines of the file docker-compose.yml interactively
+git add -p docker-compose.yml
 ```
 
-```sh
-$ diggit -- Add and commit all models
-git add app/models && git commit
-```
-
-### yolo
+### ⚠️ yolo ⚠️
 
 If you have nothing to lose, feel free to execute the command directly and accept the potential consequences:
 
