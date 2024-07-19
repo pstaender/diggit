@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
 import { generateText } from "ai";
-import { openai } from "@ai-sdk/openai"; // Ensure OPENAI_API_KEY environment variable is set
+import { createOpenAI } from "@ai-sdk/openai"; // Ensure OPENAI_API_KEY environment variable is set
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { ollama } from "ollama-ai-provider";
 import { homedir } from "node:os";
 
 let config = {
-  openai_model: process.env.OPENAI_API_MODEL || "gpt-4o",
+  openai_model: process.env.OPENAI_API_MODEL || "gpt-4o-mini",
   openai_api_key: process.env.OPENAI_API_KEY,
   ollama_model: process.env.OLLAMA_MODEL || "llama3" // or mistral as default?
 };
@@ -38,6 +38,7 @@ async function prompt(promptMessage) {
   let model = null;
 
   if (config.openai_api_key && config.openai_model) {
+    const openai = createOpenAI({ apiKey: config.openai_api_key });
     model = openai(config.openai_model);
   } else if (config.ollama_model) {
     model = ollama(config.ollama_model);

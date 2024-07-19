@@ -1,6 +1,6 @@
 {
   "name": "diggit",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "diggit.mjs",
   "bin": {
     "diggit": "diggit.mjs"
